@@ -1,3 +1,9 @@
+/**
+ * Copyright (c) 2020 Raspberry Pi (Trading) Ltd.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -80,26 +86,24 @@ int main() {
 
     //int make_play=0; 
     VALUE GPIO21_state;
-    ADDRESS GPIO21_ADDRESS=0x400140ac;
+    ADDRESS GPIO21_ADDRESS=0x400140a8;
     while (1) {
 
+        GPIO21_state=register_read(GPIO21_ADDRESS); 
 
-        if (gpio_get(Boot_button)==1)
+        if ( GPIO21_state==0x70e0300)
         {
-            //printf("case1\n");
             set_neopixel_color(0x33ff99);
-            //GPIO21_state=register_read(GPIO21_ADDRESS);
-            //printf("The state of GPIO21 is 0x%x\n",GPIO21_state);
+            printf("The state of GPIO21 is 0x%x\n",GPIO21_state);
             sleep_ms(200);
         }
-        else
+        else if(GPIO21_state==0x300)
         {
-            //printf("case2\n");
             set_neopixel_color(0xff3399);
-            GPIO21_state=register_read(GPIO21_ADDRESS);
-            //printf("The state of GPIO21 is 0x%x\n",GPIO21_state);
+            printf("The state of GPIO21 is 0x%x\n",GPIO21_state);
             sleep_ms(200);
         }
     
         }    
     }
+    
